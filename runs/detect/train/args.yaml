@@ -2,15 +2,15 @@ task: detect
 mode: train
 model: yolo11n.pt
 data: data.yaml
-epochs: 50
+epochs: 150
 time: null
-patience: 50
+patience: 70
 batch: 4
-imgsz: 640
+imgsz: 1280
 save: true
 save_period: -1
 cache: false
-device: MPS
+device: cuda
 workers: 8
 project: null
 name: train
@@ -32,11 +32,10 @@ freeze: null
 multi_scale: false
 overlap_mask: true
 mask_ratio: 4
-dropout: 0.2
+dropout: 0.0
 val: true
 split: val
 save_json: false
-save_hybrid: false
 conf: null
 iou: 0.7
 max_det: 300
@@ -91,7 +90,7 @@ translate: 0.1
 scale: 0.5
 shear: 0.0
 perspective: 0.0
-flipud: 0.0
+flipud: 0.5
 fliplr: 0.5
 bgr: 0.0
 mosaic: 1.0
@@ -103,4 +102,4 @@ erasing: 0.4
 crop_fraction: 1.0
 cfg: null
 tracker: botsort.yaml
-save_dir: runs/detect/train
+save_dir: runs\detect\train
