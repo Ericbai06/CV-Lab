@@ -1,11 +1,11 @@
-path: /Users/eric/Desktop/Python/CV/检测 玻璃瓶  # 数据集根目录 (使用绝对路径)
-train: mini/images  # 改为使用mini目录
-val: mini/images    # 验证集也使用相同的图片
+path: C:/Users/ALIENWARE/Desktop/Python/CV-Lab/检测 玻璃瓶  # 数据集根目录 (使用绝对路径)
+train: mini/images  # 训练集图片路径
+val: mini/images  # 验证集图片路径
 # test: test/images  # 测试图像路径 (可选, 相对于 'path')
 
 # 类别名称
 names:
-  0: 水滴形截面的玻璃瓶
-  1: 椭圆形截面的玻璃瓶
-  2: 圆形截面的玻璃瓶
-  3: 瓶口 
+  0: 圆形截面的玻璃瓶
+  1: 瓶口
+  2: 椭圆形截面的玻璃瓶
+  3: 水滴形截面的玻璃瓶 
