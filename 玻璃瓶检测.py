@@ -11,7 +11,7 @@ import argparse
 from bottle_detection_utils import detect_bottle_with_neck
 # --- Matplotlib 配置 (全局) ---
 # 根据字体检查结果，优先使用找到的 Songti SC 和 Arial Unicode MS
-matplotlib.rcParams['font.sans-serif'] = ['PingFang SC', 'SimHei', 'STSong']
+matplotlib.rcParams['font.sans-serif'] = ['PingFang SC', 'SimHei', 'Songti SC', 'Arial Unicode MS']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 # --- 全局常量 ---
@@ -150,7 +150,7 @@ def main():
 
             print("运行验证...")
             # 在调用 val() 之前再次强制设置字体，尝试覆盖 Ultralytics 内部可能的默认设置
-            matplotlib.rcParams['font.sans-serif'] = ['Songti SC', 'Arial Unicode MS', 'PingFang SC', 'SimHei', 'STSong']
+            matplotlib.rcParams['font.sans-serif'] = ['PingFang SC', 'SimHei', 'Songti SC', 'Arial Unicode MS', 'STSong']
             # 运行验证，明确指定数据集配置
             metrics = best_model.val(data='data.yaml')
 
