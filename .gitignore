@@ -27,3 +27,8 @@ __pycache__/
 # Datasets (Uncomment if your dataset is large and shouldn't be in Git)
 # 检测 玻璃瓶/
 # mini/ 
+
+字体.py
+yolo11n.pt
+yolov8n.pt
+yolov8x.pt
