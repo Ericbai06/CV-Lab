@@ -9,6 +9,9 @@ import matplotlib
 import torch
 import argparse
 from bottle_detection_utils import detect_bottle_with_neck
+import itertools
+from sklearn.model_selection import ParameterSampler
+from scipy.stats import uniform, randint
 # --- Matplotlib 配置 (全局) ---
 # 根据字体检查结果，优先使用找到的 Songti SC 和 Arial Unicode MS
 matplotlib.rcParams['font.sans-serif'] = ['PingFang SC', 'SimHei', 'Songti SC', 'Arial Unicode MS']
@@ -36,6 +39,8 @@ def main():
     parser.add_argument("--model_path", type=str, help="模型路径")
     parser.add_argument("--num_test", type=int, default=5, help="测试的图片数量")
     parser.add_argument("--device", type=str, default="MPS", help="使用的设备，如'cpu'或'cuda'")
+    parser.add_argument("--random_search", action="store_true", help="使用随机网格搜索优化参数")
+    parser.add_argument("--n_iter", type=int, default=10, help="随机搜索的迭代次数")
     args = parser.parse_args()
     
     # 如果通过命令行设置了skip_training，则覆盖全局变量
@@ -74,8 +79,128 @@ def main():
     results = None # 初始化 results，如果跳过训练则保持 None
     training_successful = False # 初始化 training_successful
 
-    # --- 训练模型 (根据 SKIP_TRAINING 开关决定是否执行) ---
-    if not SKIP_TRAINING:
+    # --- 随机网格搜索优化参数 (根据 args.random_search 开关决定是否执行) ---
+    if args.random_search:
+        print("\n--- 开始随机网格搜索优化参数 ---")
+        try:
+            # 定义参数空间
+            param_space = {
+                'epochs': [100, 150, 200],
+                'patience': [50, 70, 90],
+                'batch': [4, 8, 16],
+                'hsv_h': uniform(0.01, 0.04),  # 色调增强
+                'hsv_s': uniform(0.5, 0.9),    # 饱和度增强
+                'hsv_v': uniform(0.3, 0.6),    # 亮度增强
+                'flipud': uniform(0.3, 0.7),   # 上下翻转概率
+                'fliplr': uniform(0.3, 0.7),   # 左右翻转概率
+                'scale': uniform(0.3, 0.7),    # 尺度增强
+                'degrees': uniform(90.0, 180.0)  # 旋转角度范围
+            }
+            
+            # 使用ParameterSampler生成随机参数组合
+            n_iter = args.n_iter  # 随机搜索的迭代次数
+            param_list = list(ParameterSampler(param_space, n_iter=n_iter, random_state=42))
+            
+            best_map = 0.0
+            best_params = None
+            
+            print(f"将进行 {n_iter} 次参数组合的搜索...")
+            
+            for i, params in enumerate(param_list):
+                print(f"\n--- 参数组合 {i+1}/{n_iter} ---")
+                print(f"参数: {params}")
+                
+                # 训练模型
+                try:
+                    # 确保某些参数是整数类型
+                    params['epochs'] = int(params['epochs'])
+                    params['patience'] = int(params['patience'])
+                    params['batch'] = int(params['batch'])
+                    
+                    curr_results = model.train(
+                        data='data.yaml', 
+                        epochs=params['epochs'],
+                        device=args.device,
+                        imgsz=1280,
+                        batch=params['batch'],
+                        patience=params['patience'],
+                        augment=True,
+                        mosaic=1.0,
+                        flipud=params['flipud'],
+                        fliplr=params['fliplr'],
+                        scale=params['scale'],
+                        hsv_h=params['hsv_h'],
+                        hsv_s=params['hsv_s'],
+                        hsv_v=params['hsv_v'],
+                        degrees=params['degrees'],
+                        resume=False,
+                        overlap_mask=True,
+                        single_cls=False,
+                    )
+                    
+                    # 验证模型
+                    save_dir = curr_results.save_dir
+                    best_model_path = os.path.join(save_dir, 'weights/best.pt')
+                    
+                    if os.path.exists(best_model_path):
+                        temp_model = YOLO(best_model_path)
+                        metrics = temp_model.val(data='data.yaml')
+                        
+                        # 获取mAP指标
+                        curr_map = metrics.box.map
+                        
+                        print(f"mAP: {curr_map:.4f}")
+                        
+                        # 更新最佳参数
+                        if curr_map > best_map:
+                            best_map = curr_map
+                            best_params = params.copy()
+                            best_model = temp_model
+                            results = curr_results
+                            training_successful = True
+                    else:
+                        print(f"警告：找不到模型权重文件: {best_model_path}")
+                
+                except Exception as e:
+                    print(f"训练过程中发生错误: {e}")
+            
+            print("\n--- 随机网格搜索结束 ---")
+            print(f"最佳参数: {best_params}")
+            print(f"最佳mAP: {best_map:.4f}")
+            
+            # 如果找到了最佳参数，使用最佳参数重新训练一次模型
+            if best_params:
+                print("\n--- 使用最佳参数最终训练 ---")
+                try:
+                    results = model.train(
+                        data='data.yaml', 
+                        epochs=int(best_params['epochs']),
+                        device=args.device,
+                        imgsz=1280,
+                        batch=int(best_params['batch']),
+                        patience=int(best_params['patience']),
+                        augment=True,
+                        mosaic=1.0,
+                        flipud=best_params['flipud'],
+                        fliplr=best_params['fliplr'],
+                        scale=best_params['scale'],
+                        hsv_h=best_params['hsv_h'],
+                        hsv_s=best_params['hsv_s'],
+                        hsv_v=best_params['hsv_v'],
+                        degrees=best_params['degrees'],
+                        resume=False,
+                        overlap_mask=True,
+                        single_cls=False,
+                    )
+                    print("--- 最佳参数训练完成 ---")
+                    training_successful = True
+                except Exception as e:
+                    print(f"最佳参数训练过程中发生错误: {e}")
+        except Exception as e:
+            print(f"随机网格搜索过程中发生错误: {e}")
+    
+    # --- 训练模型 (如果不进行随机搜索，且 SKIP_TRAINING 为 False) ---
+    elif not SKIP_TRAINING:
         print("\n--- 开始训练模型 --- (SKIP_TRAINING is False)")
         try:
             print("开始训练 (epochs=100, device='cuda', imgsz=1280, batch=4, patience=50, augment=True, mosaic=1.0, resume=False)...")
