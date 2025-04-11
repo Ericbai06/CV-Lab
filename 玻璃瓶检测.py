@@ -11,7 +11,7 @@ import argparse
 from bottle_detection_utils import detect_bottle_with_neck
 # --- Matplotlib 配置 (全局) ---
 # 根据字体检查结果，优先使用找到的 Songti SC 和 Arial Unicode MS
-matplotlib.rcParams['font.sans-serif'] = ['SimHei']
+matplotlib.rcParams['font.sans-serif'] = ['PingFang SC', 'SimHei', 'STSong']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 # --- 全局常量 ---
@@ -19,7 +19,7 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 dataset_dir = "检测 玻璃瓶"
 
 # --- 控制开关 ---
-SKIP_TRAINING = True  # 设置为 True 跳过训练步骤，直接使用已训练的模型进行测试
+SKIP_TRAINING = False  # 设置为 True 跳过训练步骤，直接使用已训练的模型进行测试
 
 def main():
     """主执行函数，包含模型加载、训练、验证和预测逻辑"""
@@ -28,14 +28,14 @@ def main():
     parser = argparse.ArgumentParser(description="玻璃瓶检测程序")
     parser.add_argument("--images", nargs="+", help="要检测的图片路径，可以指定多个")
     parser.add_argument("--skip_training", action="store_true", help="跳过训练步骤")
-    parser.add_argument("--conf", type=float, default=0.7, help="检测置信度阈值")
+    parser.add_argument("--conf", type=float, default=0.5, help="检测置信度阈值")
     parser.add_argument("--max_images", type=int, default=30, help="最多处理的图片数量")
     parser.add_argument("--predict_single", type=str, help="预测单张图片的路径")
     parser.add_argument("--test", action="store_true", help="运行测试模式")
     parser.add_argument("--test_dir", type=str, help="测试目录路径")
     parser.add_argument("--model_path", type=str, help="模型路径")
     parser.add_argument("--num_test", type=int, default=5, help="测试的图片数量")
-    parser.add_argument("--device", type=str, default="cpu", help="使用的设备，如'cpu'或'cuda'")
+    parser.add_argument("--device", type=str, default="MPS", help="使用的设备，如'cpu'或'cuda'")
     args = parser.parse_args()
     
     # 如果通过命令行设置了skip_training，则覆盖全局变量
@@ -82,7 +82,7 @@ def main():
             results = model.train(
                 data='data.yaml', 
                 epochs=150,  # 增加训练轮数
-                device='cuda',
+                device=args.device, # 使用命令行或默认指定的设备
                 imgsz=1280,
                 batch=4,
                 patience=70,  # 增加早停耐心值
@@ -94,6 +94,7 @@ def main():
                 hsv_h=0.015, # 色调增强
                 hsv_s=0.7,   # 饱和度增强
                 hsv_v=0.4,   # 亮度增强
+                degrees=180.0, # 添加随机旋转增强，范围 +/- 90 度
                 resume=False,
                 overlap_mask=True,  # 使用重叠掩码提高精度
                 single_cls=False,   # 多类别检测
@@ -338,7 +339,7 @@ if __name__ == "__main__":
     main()
 
 # --- 单张图片预测函数 ---
-def predict_single_image(image_path, model_path=None, conf=0.7, device='cpu'):
+def predict_single_image(image_path, model_path=None, conf=0.5, device='MPS'):
     """
     预测单张图片
     
@@ -392,7 +393,7 @@ def predict_single_image(image_path, model_path=None, conf=0.7, device='cpu'):
         print(f"预测过程中发生错误: {e}")
 
 # --- 测试预测功能 ---
-def test_prediction(test_dir=None, model_path=None, conf=0.7, num_images=5, device='cpu'):
+def test_prediction(test_dir=None, model_path=None, conf=0.5, num_images=5, device='MPS'):
     """
     测试预测功能
     

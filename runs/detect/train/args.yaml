@@ -10,7 +10,7 @@ imgsz: 1280
 save: true
 save_period: -1
 cache: false
-device: cuda
+device: MPS
 workers: 8
 project: null
 name: train
@@ -36,6 +36,7 @@ dropout: 0.0
 val: true
 split: val
 save_json: false
+save_hybrid: false
 conf: null
 iou: 0.7
 max_det: 300
@@ -85,7 +86,7 @@ nbs: 64
 hsv_h: 0.015
 hsv_s: 0.7
 hsv_v: 0.4
-degrees: 0.0
+degrees: 180.0
 translate: 0.1
 scale: 0.5
 shear: 0.0
@@ -102,4 +103,4 @@ erasing: 0.4
 crop_fraction: 1.0
 cfg: null
 tracker: botsort.yaml
-save_dir: runs\detect\train
+save_dir: runs/detect/train
