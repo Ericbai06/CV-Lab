@@ -88,13 +88,13 @@ def main():
                 'epochs': [100, 150, 200],
                 'patience': [50, 70, 90],
                 'batch': [4, 8, 16],
-                'hsv_h': uniform(0.01, 0.04),  # 色调增强
-                'hsv_s': uniform(0.5, 0.9),    # 饱和度增强
-                'hsv_v': uniform(0.3, 0.6),    # 亮度增强
+                'hsv_h': uniform(0.01, 0.03),  # 色调增强，保持在较小的范围内
+                'hsv_s': uniform(0.5, 0.8),    # 饱和度增强
+                'hsv_v': uniform(0.3, 0.5),    # 亮度增强
                 'flipud': uniform(0.3, 0.7),   # 上下翻转概率
                 'fliplr': uniform(0.3, 0.7),   # 左右翻转概率
                 'scale': uniform(0.3, 0.7),    # 尺度增强
-                'degrees': uniform(90.0, 180.0)  # 旋转角度范围
+                'degrees': uniform(90.0, 170.0)  # 旋转角度范围
             }
             
             # 使用ParameterSampler生成随机参数组合
@@ -116,6 +116,25 @@ def main():
                     params['epochs'] = int(params['epochs'])
                     params['patience'] = int(params['patience'])
                     params['batch'] = int(params['batch'])
+                    
+                    # 确保浮点参数是Python原生float类型
+                    params['hsv_h'] = float(params['hsv_h'])
+                    # 特殊处理hsv_h，限制在合理范围内
+                    if params['hsv_h'] > 0.03:  # 如果值太大
+                        params['hsv_h'] = 0.03  # 限制为0.03
+                    print(f"调整后的hsv_h: {params['hsv_h']}")
+                    
+                    params['hsv_s'] = float(params['hsv_s'])
+                    params['hsv_v'] = float(params['hsv_v'])
+                    params['flipud'] = float(params['flipud'])
+                    params['fliplr'] = float(params['fliplr'])
+                    params['scale'] = float(params['scale'])
+                    params['degrees'] = float(params['degrees'])
+                    
+                    # 打印转换后的参数值和类型，以便于调试
+                    print("转换后的参数类型:")
+                    for key, value in params.items():
+                        print(f"  {key}: {value} ({type(value).__name__})")
                     
                     curr_results = model.train(
                         data='data.yaml', 
@@ -172,13 +191,34 @@ def main():
             if best_params:
                 print("\n--- 使用最佳参数最终训练 ---")
                 try:
+                    # 确保所有参数都是正确的类型
+                    best_params['epochs'] = int(best_params['epochs'])
+                    best_params['patience'] = int(best_params['patience'])
+                    best_params['batch'] = int(best_params['batch'])
+                    best_params['hsv_h'] = float(best_params['hsv_h'])
+                    # 特殊处理hsv_h，限制在合理范围内
+                    if best_params['hsv_h'] > 0.03:  # 如果值太大
+                        best_params['hsv_h'] = 0.03  # 限制为0.03
+                    print(f"最终训练调整后的hsv_h: {best_params['hsv_h']}")
+                    
+                    best_params['hsv_s'] = float(best_params['hsv_s'])
+                    best_params['hsv_v'] = float(best_params['hsv_v'])
+                    best_params['flipud'] = float(best_params['flipud'])
+                    best_params['fliplr'] = float(best_params['fliplr'])
+                    best_params['scale'] = float(best_params['scale'])
+                    best_params['degrees'] = float(best_params['degrees'])
+                    
+                    print("最终训练使用的参数类型:")
+                    for key, value in best_params.items():
+                        print(f"  {key}: {value} ({type(value).__name__})")
+                    
                     results = model.train(
                         data='data.yaml', 
-                        epochs=int(best_params['epochs']),
+                        epochs=best_params['epochs'],
                         device=args.device,
                         imgsz=1280,
-                        batch=int(best_params['batch']),
-                        patience=int(best_params['patience']),
+                        batch=best_params['batch'],
+                        patience=best_params['patience'],
                         augment=True,
                         mosaic=1.0,
                         flipud=best_params['flipud'],
