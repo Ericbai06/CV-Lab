@@ -31,20 +31,6 @@
 - Matplotlib
 - NumPy
 
-## 安装步骤
-
-```bash
-# 克隆项目
-git clone https://github.com/your-username/glass-bottle-detection.git
-cd glass-bottle-detection
-
-# 安装依赖
-pip install -r requirements.txt
-
-# 下载预训练模型（如果没有自动下载）
-# 项目默认使用 yolov8x.pt 或自定义训练的模型
-```
-
 ## 使用方法
 
 ### GUI界面
