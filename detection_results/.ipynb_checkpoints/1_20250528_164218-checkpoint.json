@@ -1,0 +1,273 @@
+{
+    "video_name": "1.mp4",
+    "detection_time": "20250528_164218",
+    "total_scenes": 38,
+    "scenes": [
+        {
+            "scene_id": 1,
+            "start_time": 65.92,
+            "end_time": 69.08,
+            "duration": 3.1599999999999966,
+            "violence_probability": 0.5747240781784058
+        },
+        {
+            "scene_id": 2,
+            "start_time": 558.08,
+            "end_time": 565.08,
+            "duration": 7.0,
+            "violence_probability": 0.9963762164115906
+        },
+        {
+            "scene_id": 3,
+            "start_time": 625.28,
+            "end_time": 643.8,
+            "duration": 18.519999999999982,
+            "violence_probability": 0.9946553707122803
+        },
+        {
+            "scene_id": 4,
+            "start_time": 655.36,
+            "end_time": 658.52,
+            "duration": 3.159999999999968,
+            "violence_probability": 0.49004390835762024
+        },
+        {
+            "scene_id": 5,
+            "start_time": 718.08,
+            "end_time": 734.04,
+            "duration": 15.959999999999923,
+            "violence_probability": 0.9966462254524231
+        },
+        {
+            "scene_id": 6,
+            "start_time": 813.44,
+            "end_time": 819.16,
+            "duration": 5.719999999999914,
+            "violence_probability": 0.9955641031265259
+        },
+        {
+            "scene_id": 7,
+            "start_time": 824.32,
+            "end_time": 827.48,
+            "duration": 3.159999999999968,
+            "violence_probability": 0.662850022315979
+        },
+        {
+            "scene_id": 8,
+            "start_time": 966.4,
+            "end_time": 969.56,
+            "duration": 3.159999999999968,
+            "violence_probability": 0.5473409295082092
+        },
+        {
+            "scene_id": 9,
+            "start_time": 975.36,
+            "end_time": 989.4,
+            "duration": 14.039999999999964,
+            "violence_probability": 0.9910542368888855
+        },
+        {
+            "scene_id": 10,
+            "start_time": 1045.12,
+            "end_time": 1050.84,
+            "duration": 5.720000000000027,
+            "violence_probability": 0.9793662428855896
+        },
+        {
+            "scene_id": 11,
+            "start_time": 1141.76,
+            "end_time": 1144.92,
+            "duration": 3.160000000000082,
+            "violence_probability": 0.5411182641983032
+        },
+        {
+            "scene_id": 12,
+            "start_time": 1274.88,
+            "end_time": 1301.08,
+            "duration": 26.199999999999818,
+            "violence_probability": 0.9966593980789185
+        },
+        {
+            "scene_id": 13,
+            "start_time": 1358.72,
+            "end_time": 1367.0,
+            "duration": 8.279999999999973,
+            "violence_probability": 0.9956710338592529
+        },
+        {
+            "scene_id": 14,
+            "start_time": 1437.44,
+            "end_time": 1473.24,
+            "duration": 35.799999999999955,
+            "violence_probability": 0.996924102306366
+        },
+        {
+            "scene_id": 15,
+            "start_time": 1477.12,
+            "end_time": 1484.12,
+            "duration": 7.0,
+            "violence_probability": 0.9860925078392029
+        },
+        {
+            "scene_id": 16,
+            "start_time": 1491.2,
+            "end_time": 1495.0,
+            "duration": 3.7999999999999545,
+            "violence_probability": 0.701924741268158
+        },
+        {
+            "scene_id": 17,
+            "start_time": 1498.88,
+            "end_time": 1504.6,
+            "duration": 5.7199999999998,
+            "violence_probability": 0.870185375213623
+        },
+        {
+            "scene_id": 18,
+            "start_time": 1509.76,
+            "end_time": 1519.32,
+            "duration": 9.559999999999945,
+            "violence_probability": 0.9953409433364868
+        },
+        {
+            "scene_id": 19,
+            "start_time": 1539.2,
+            "end_time": 1543.0,
+            "duration": 3.7999999999999545,
+            "violence_probability": 0.9902777075767517
+        },
+        {
+            "scene_id": 20,
+            "start_time": 1547.52,
+            "end_time": 1559.64,
+            "duration": 12.120000000000118,
+            "violence_probability": 0.9972090125083923
+        },
+        {
+            "scene_id": 21,
+            "start_time": 1627.52,
+            "end_time": 1637.08,
+            "duration": 9.559999999999945,
+            "violence_probability": 0.9826995134353638
+        },
+        {
+            "scene_id": 22,
+            "start_time": 1642.24,
+            "end_time": 1667.16,
+            "duration": 24.920000000000073,
+            "violence_probability": 0.9972496628761292
+        },
+        {
+            "scene_id": 23,
+            "start_time": 1701.12,
+            "end_time": 1711.96,
+            "duration": 10.840000000000146,
+            "violence_probability": 0.9617445468902588
+        },
+        {
+            "scene_id": 24,
+            "start_time": 1723.52,
+            "end_time": 1728.6,
+            "duration": 5.079999999999927,
+            "violence_probability": 0.9896882176399231
+        },
+        {
+            "scene_id": 25,
+            "start_time": 1797.76,
+            "end_time": 1802.84,
+            "duration": 5.079999999999927,
+            "violence_probability": 0.9955469369888306
+        },
+        {
+            "scene_id": 26,
+            "start_time": 1854.08,
+            "end_time": 1857.88,
+            "duration": 3.800000000000182,
+            "violence_probability": 0.6077864766120911
+        },
+        {
+            "scene_id": 27,
+            "start_time": 1928.96,
+            "end_time": 1937.88,
+            "duration": 8.920000000000073,
+            "violence_probability": 0.991245448589325
+        },
+        {
+            "scene_id": 28,
+            "start_time": 1949.44,
+            "end_time": 1957.08,
+            "duration": 7.639999999999873,
+            "violence_probability": 0.989378035068512
+        },
+        {
+            "scene_id": 29,
+            "start_time": 1964.16,
+            "end_time": 1971.16,
+            "duration": 7.0,
+            "violence_probability": 0.9932308197021484
+        },
+        {
+            "scene_id": 30,
+            "start_time": 2007.04,
+            "end_time": 2013.4,
+            "duration": 6.360000000000127,
+            "violence_probability": 0.8198679685592651
+        },
+        {
+            "scene_id": 31,
+            "start_time": 2041.6,
+            "end_time": 2046.04,
+            "duration": 4.440000000000055,
+            "violence_probability": 0.9950709342956543
+        },
+        {
+            "scene_id": 32,
+            "start_time": 2081.28,
+            "end_time": 2090.2,
+            "duration": 8.919999999999618,
+            "violence_probability": 0.9546598792076111
+        },
+        {
+            "scene_id": 33,
+            "start_time": 2095.36,
+            "end_time": 2098.52,
+            "duration": 3.1599999999998545,
+            "violence_probability": 0.6598013043403625
+        },
+        {
+            "scene_id": 34,
+            "start_time": 2150.4,
+            "end_time": 2153.56,
+            "duration": 3.1599999999998545,
+            "violence_probability": 0.7257454991340637
+        },
+        {
+            "scene_id": 35,
+            "start_time": 2204.16,
+            "end_time": 2207.96,
+            "duration": 3.800000000000182,
+            "violence_probability": 0.9799988865852356
+        },
+        {
+            "scene_id": 36,
+            "start_time": 2389.12,
+            "end_time": 2392.28,
+            "duration": 3.1600000000003092,
+            "violence_probability": 0.7372699975967407
+        },
+        {
+            "scene_id": 37,
+            "start_time": 2417.28,
+            "end_time": 2460.76,
+            "duration": 43.48000000000002,
+            "violence_probability": 0.9972025156021118
+        },
+        {
+            "scene_id": 38,
+            "start_time": 2648.96,
+            "end_time": 2653.4,
+            "duration": 4.440000000000055,
+            "violence_probability": 0.9761733412742615
+        }
+    ]
+}
