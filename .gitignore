@@ -34,3 +34,11 @@ yolov8n.pt
 yolov8x.pt
 
 The.Knockout.S01E
+
+# 大文件
+*.mkv
+*.mp4
+*.zip
+models--MCG-NJU--videomae-base/
+best_model/
+Real Life Violence Dataset/
