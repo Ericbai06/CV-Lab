@@ -42,12 +42,12 @@ pip install -r requirements.txt
 
 2. 运行检测：
 ```bash
-python src/detect_violence.py --video_path <视频路径>
+python detect_violence.py --video_path <视频路径>
 ```
 
 3. 处理检测结果：
 ```bash
-python src/merge_detections.py
+python merge_detections.py
 ```
 
 ## 参数说明
